@@ -50,7 +50,7 @@ const todayQuotes =Math.floor(Math.random()*quotes.length) ;
 quote.innerText = quotes[todayQuotes].quote;
 author.innerText= quotes[todayQuotes].author;
 
-console.log( quotes[todayQuotes].quote);
+// console.log( quotes[todayQuotes].quote);
 
 
 
