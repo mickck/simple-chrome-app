@@ -2,11 +2,11 @@ const toDoForm = document.getElementById("todo-form");
 const toDoInput = toDoForm.querySelector("input");
 //same   const toDoInput = document.querySelector("#todo-form input");
 const toDoList = document.getElementById("todo-list");
-
+const TODOS_KEY = "toDos";
 const toDos = [];
 
 function saveTodos(){
-    localStorage.setItem("todos",JSON.stringify(toDos));
+    localStorage.setItem(TODOS_KEY,JSON.stringify(toDos));
     //JSON.stringify : make a string everything in 
 }
 
@@ -40,3 +40,21 @@ function handleToDoSubmit(event){
 };
 
 toDoForm.addEventListener("submit", handleToDoSubmit);
+
+
+const savedToDos = localStorage.getItem(TODOS_KEY);
+//change Strings to Array and put this at savedToDos
+// console.log(savedToDos);
+if(savedToDos !==null){
+    const parsedToDos = JSON.parse(savedToDos);
+    // console.log(parsedToDos);
+    parsedToDos.forEach((item)=>console.log("hello ",item)); 
+    //the function each item for array
+    // it's easy way to write it once 
+    
+    
+// function sayHello(item){
+//     //item from parsedToDOs's array ["a","b","c"] then it operates a, b, c 
+//     console.log("hello",item);}
+//     parsedToDos.forEach(sayHello);
+}
