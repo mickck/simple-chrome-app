@@ -3,7 +3,7 @@ const toDoInput = toDoForm.querySelector("input");
 //same   const toDoInput = document.querySelector("#todo-form input");
 const toDoList = document.getElementById("todo-list");
 const TODOS_KEY = "toDos";
-const toDos = [];
+let toDos = [];
 
 function saveTodos(){
     localStorage.setItem(TODOS_KEY,JSON.stringify(toDos));
@@ -14,15 +14,20 @@ function deleteTodo(event){
     const li =event.target.parentElement;
     //event == value, event.taget == button, event.target.parentElement == button's li
     li.remove();
+    toDos = toDos.filter(todo=>  todo.id !== parseInt(li.id));
+    //li.id is string type toDos.id is
+    saveTodos();
+    
 }
 
 function paintTodo(newTodo){
 const li = document.createElement("li");
+li.id =newTodo.id;
 const span = document.createElement("span");
 const button  =document.createElement("button");
 li.appendChild(span);
 li.appendChild(button);
-span.innerText=newTodo;
+span.innerText=newTodo.text;
 button.innerText="❌";
 button.addEventListener("click",deleteTodo);
 toDoList.appendChild(li);
@@ -34,8 +39,13 @@ function handleToDoSubmit(event){
     const newTodo = toDoInput.value; 
     // put the todoInputs data to newTodo and delete words in the todoform; 
     toDoInput.value="";
-    toDos.push(newTodo);
-    paintTodo(newTodo);
+    newObjTodo= {
+        text: newTodo,
+        id: Date.now()
+
+    }
+    toDos.push(newObjTodo);
+    paintTodo(newObjTodo);
     saveTodos();
 };
 
@@ -47,14 +57,7 @@ const savedToDos = localStorage.getItem(TODOS_KEY);
 // console.log(savedToDos);
 if(savedToDos !==null){
     const parsedToDos = JSON.parse(savedToDos);
-    // console.log(parsedToDos);
-    parsedToDos.forEach((item)=>console.log("hello ",item)); 
-    //the function each item for array
-    // it's easy way to write it once 
+    toDos = parsedToDos;
+    parsedToDos.forEach(paintTodo);     
     
-    
-// function sayHello(item){
-//     //item from parsedToDOs's array ["a","b","c"] then it operates a, b, c 
-//     console.log("hello",item);}
-//     parsedToDos.forEach(sayHello);
 }
